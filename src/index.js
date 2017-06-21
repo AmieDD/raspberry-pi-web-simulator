@@ -4,6 +4,7 @@ import Banner from './component/banner/banner';
 import Toolbar from './component/toolbar/toolbar';
 import Display from './component/display/display';
 import HelpOverlay from './component/helpOverlay/helpOverlay';
+import HintOverlay from './component/hintOverlay/hintOverlay';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 
@@ -21,14 +22,15 @@ class Index extends Component {
       },
       LEDTurnOn: false,
       isRunning: false,
-      showHelp: false
+      showHelp: false,
+      showHint: false
     }
     if (typeof(Storage) !== "undefined") {
         var disableHelp = localStorage.getItem("disable-help");
-        if(disableHelp == null) {
-            this.state.showHelp = true;
+        // if(disableHelp == null) {
+            this.state.showHint = true;
             localStorage.setItem("disable-help","true");
-        }
+        // }
     }
     this.runApp = this.runApp.bind(this);
     this.ledSwitch = this.ledSwitch.bind(this);
@@ -97,6 +99,9 @@ class Index extends Component {
   }
 
   toggleHelpState = () => {
+    if(!this.state.showHelp) {
+        this.closeHint();
+    }
     this.setState((prev)=>{
         return {
             showHelp: !prev.showHelp
@@ -104,8 +109,16 @@ class Index extends Component {
     })
   }
 
+  closeHint = () => {
+    this.setState(()=>{
+        return {
+            showHint: false
+        }
+    })
+  }
+
   render() {
-    const { console, LEDTurnOn, isRunning, showHelp } = this.state;
+    const { console, LEDTurnOn, isRunning, showHelp, showHint } = this.state;
     return (
       <div className='main'>
         <Banner 
@@ -123,6 +136,10 @@ class Index extends Component {
         <HelpOverlay
           needShowHelp = {showHelp}
           toggleHelpState = {this.toggleHelpState} />
+
+        <HintOverlay
+          needShowHint = {this.state.showHint} 
+          closeHint = {this.closeHint} />
       </div>
     );
   }

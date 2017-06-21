@@ -4,6 +4,8 @@
   margin-right: 40px;
   color: white;
   font-size: 15px;
+  z-index: 6;
+  position: relative;
 }
 
 .help:hover {
