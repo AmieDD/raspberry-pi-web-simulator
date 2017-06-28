@@ -2,10 +2,24 @@ div img {
     max-width: 100%;
 }
 
+.display {
+    display: flex;
+}
+
 .editor {
     width: 100%;
 }
 
 .leftPanel img{
-    margin-top: 24px;
+    margin-top: -24px;
+}
+
+.leftPanel {
+    flex: 6;
+    display: flex;
+    align-items: center;
+}
+
+.rightPanel {
+    flex: 7;
 }
